@@ -1,0 +1,22 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Handle requests to index.php
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^index\.php - [L]
+
+    # Redirect all other requests to index.php
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ index.php?$1 [L,QSA]
+
+    # Allow access to the assets and protected directories
+    RewriteRule ^(assets|protected|uploads)/ - [L]
+
+</IfModule>
+
+# Deny access to sensitive files
+<FilesMatch "^(\.htaccess|\.git|\.svn|\.env)">
+    Require all denied
+</FilesMatch>
